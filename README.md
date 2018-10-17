@@ -2,5 +2,5 @@
 * nginx
 * php-fpm
 
-# How to
+# Usage
 
