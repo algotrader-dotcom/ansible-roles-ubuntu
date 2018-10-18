@@ -1,0 +1,5 @@
+---
+ansible_connection: ssh
+ansible_python_interpreter: /usr/bin/python2.7
+ansible_ssh_user: vagrant
+ansible_ssh_private_key_file: .vagrant/machines/default/virtualbox/private_key
