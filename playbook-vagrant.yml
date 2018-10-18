@@ -10,7 +10,7 @@
 
   roles:
     - { role: sysadmin.common, tags: ['common'] }
-    - { role: sysadmin.php71, tags: ['php'] }
+    - { role: sysadmin.php7x, tags: ['php'] }
 
   tasks:
     #- include: tasks/post-tasks.yml

@@ -3,7 +3,8 @@
 
 - name: Install requirements packages
   apt:
-    name: "{{ item }}"
+    name: "{{ packages }}"
     state: present
-  with_items:
-    - python-software-properties
+  vars:
+    packages:
+      - python-software-properties
