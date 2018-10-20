@@ -1,0 +1,8 @@
+---
+# handlers file for roles/sysadmin.nginx
+
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+  become: yes
