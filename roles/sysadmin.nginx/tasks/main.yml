@@ -4,6 +4,10 @@
 - name: PHP | Install Ondrej PHP PPA
   apt_repository: repo='ppa:nginx/stable' update_cache=yes
 
+- name: apt-get update
+  apt:
+    update_cache: yes
+
 - name: Install nginx
   apt:
     name: "{{ item }}"
@@ -31,4 +35,23 @@
   file:
     path: "/etc/nginx/sites-enabled/default"
     state: absent
+  notify: restart nginx
+
+- name: Configure vhosts
+  template:
+    src: 'templates/{{ item }}.conf.j2'
+    dest: '/etc/nginx/sites-available/{{ item }}.conf'
+    force: yes
+  with_items:
+    - vhost-01
+    - vhost-02
+
+- name: Configure vhosts ( symlink )
+  file:
+    src: '/etc/nginx/sites-available/{{ item }}.conf'
+    dest: '/etc/nginx/sites-enabled/{{ item }}.conf'
+    state: link
+  with_items:
+    - vhost-01
+    - vhost-02
   notify: restart nginx
