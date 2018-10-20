@@ -40,7 +40,7 @@
     dest: '/etc/nginx/sites-enabled/{{ item }}.conf'
     force: yes
   with_items:
-    - amc_vn
+    - vhost-01
     - vhost-02
 
 - name: Ansible find file examples
