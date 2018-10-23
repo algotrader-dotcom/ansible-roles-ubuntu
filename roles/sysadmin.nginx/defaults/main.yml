@@ -1,2 +1,4 @@
 ---
 # defaults file for roles/sysadmin.nginx
+
+env: "stage"

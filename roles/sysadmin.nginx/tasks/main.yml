@@ -14,34 +14,47 @@
   systemd:
     name: nginx
     enabled: yes
-    masked: no
 
 - name: Make nginx service is running
   systemd:
     state: started
     name: nginx
 
-- name: Remove default nginx
-  file:
-    path: "/etc/nginx/sites-available/default"
-    state: absent
-  notify: restart nginx
+#- name: Remove default nginx
+#  file:
+#    path: "/etc/nginx/sites-enabled/default"
+#    state: absent
+#  notify: restart nginx
 
-- name: Remove default nginx
-  file:
-    path: "/etc/nginx/sites-enabled/default"
-    state: absent
-  notify: restart nginx
+# SSL certs ( AMC staging )
+- name: Upload certs in files/ directory remote host
+  copy: 
+    src: "files/es.staging.kochenmitamc.info/"
+    dest: "/root/.acme.sh/es.staging.kochenmitamc.info/"
+    directory_mode: yes
+
+# nginx.conf
+- name: Configure nginx.conf
+  template:
+    src: 'templates/{{ env }}/{{ item }}.conf'
+    dest: '/etc/nginx/{{ item }}.conf'
+    force: yes
+  with_items:
+    - nginx
 
 # with_items is a list of name in templates
 - name: Configure vhosts
   template:
-    src: 'templates/{{ item }}.conf.j2'
+    src: 'templates/{{ env }}/{{ item }}.conf'
     dest: '/etc/nginx/sites-enabled/{{ item }}.conf'
     force: yes
   with_items:
-    - vhost-01
-    - vhost-02
+    - amc_vn_ssl
+    - amc_de_ssl
+    - amc_es_ssl
+    - amc_it_ssl
+    - mailhog
+    - jenkins_stage
 
 - name: Ansible find file examples
   find:

@@ -170,5 +170,7 @@ ldap.max_links = -1
 [opcache]
 
 [curl]
+curl.cainfo = "/etc/php/{{ php_version }}/cacert.pem"
+openssl.cafile="/etc/php/{{ php_version }}/cacert.pem"
 
 [openssl]
